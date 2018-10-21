@@ -1,0 +1,26 @@
+{
+    "name": "prinmeshia/medevia",
+    "description": "personal framework for medevia",
+    "keywords": ["mvc", "no framework"],
+    "authors": [
+        {
+            "name": "Prin'Meshia",
+            "email": "contact@medevia.fr",
+            "role": "Creator / Main Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.0",
+        "twig/twig": "^2.5",
+        "php-di/php-di": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Persona\\":"Persona/",
+            "Core\\": "Persona/Core/",
+            "Helpers\\": "Persona/Helpers/",
+            "Controller\\":"Src/Controller/",
+            "Model\\":"Src/Model/"
+        }
+    }
+}

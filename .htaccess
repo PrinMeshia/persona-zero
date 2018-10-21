@@ -1,0 +1,54 @@
+<Files index.php>
+	php_value post_max_size 20M
+	php_value upload_max_filesize 20M
+</Files>
+<Files .htaccess>
+	order allow,deny
+	deny from all
+</Files>
+Options -Indexes
+<Files ~ "^(index)\.(p?s?x?htm?|txt|aspx?|cfml?|cgi|pl|php[3-9]|jsp|xml)$">
+	order allow,deny
+	deny from all
+</Files>
+<Files ~ "\.(inc|class|sql|ini|conf|exe|dll|bin|tpl|bkp|dat|c|h|py|spd|theme|module|json)$">
+	deny from all
+</Files>
+    Options +FollowSymLinks
+	RewriteEngine On
+	RewriteEngine On
+	RewriteCond %{HTTPS} off
+	RewriteCond %{HTTP_HOST} !=localhost
+	RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+
+	RewriteRule ^/?$ public/ [L]
+	RewriteCond %{REQUEST_URI} !\.(css|gif|ico|jpg|jpeg|js|png|swf|txt|svg)$
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.+)$ public/index.php [QSA,L]
+
+<IfModule mod_expires.c>
+	ExpiresActive On
+	ExpiresDefault "access plus 7200 seconds"
+	ExpiresByType image/jpg "access plus 2592000 seconds"
+	ExpiresByType image/jpeg "access plus 2592000 seconds"
+	ExpiresByType image/png "access plus 2592000 seconds"
+	ExpiresByType image/gif "access plus 2592000 seconds"
+	AddType image/svg+xml .svg
+	ExpiresByType image/svg+xml "access plus 2592000 seconds"
+	AddType image/x-icon .ico
+	ExpiresByType image/ico "access plus 2592000 seconds"
+	ExpiresByType image/icon "access plus 2592000 seconds"
+	ExpiresByType image/x-icon "access plus 2592000 seconds"
+	ExpiresByType text/css "access plus 2592000 seconds"
+	ExpiresByType text/javascript "access plus 259200 seconds"
+	ExpiresByType text/plain "access plus 259200 seconds"
+	ExpiresByType text/html "access plus 7200 seconds"
+	ExpiresByType application/xhtml+xml "access plus 7200 seconds"
+	ExpiresByType application/javascript A259200
+	ExpiresByType application/x-javascript "access plus 2592000 seconds"
+ExpiresByType application/x-shockwave-flash "access plus 2592000 seconds"
+</IfModule>
+
+
+

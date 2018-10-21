@@ -1,0 +1,5 @@
+vendor/*
+Src/Views/*
+Src/Model/*
+Src/Controller/*
+
