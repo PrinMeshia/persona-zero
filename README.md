@@ -11,6 +11,8 @@ This framework is under construction
 ## Requirement
 
  - PHP >= 7.2.*
+ - Twig
+ - PHP-DI
 
 ## Configuration
 
