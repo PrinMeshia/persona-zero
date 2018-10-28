@@ -16,10 +16,10 @@ class Database
     public function __construct(array $data)
     {
         if ($data) {
-            $this->dbName = $data['dbname'];
+            $this->dbName = $data['name'];
             $this->dbHost =$data['host'];
             $this->dbUser =$data['user'];
-            $this->dbPass =$data['password']; 
+            $this->dbPass =$data['pass']; 
         }
     }
 

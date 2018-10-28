@@ -20,7 +20,16 @@
             "Core\\": "Persona/Core/",
             "Helpers\\": "Persona/Helpers/",
             "Controller\\":"Src/Controller/",
-            "Model\\":"Src/Model/"
-        }
-    }
+            "Model\\":"Src/Model/",
+            "Manager\\":"Src/Manager/",
+            "Widget\\":"Src/Widget/"
+        },
+        "files": [
+            "Persona/functions.php"
+        ]
+    },
+    "config": {
+        "disable-tls": true,
+        "secure-http": false
+    }  
 }

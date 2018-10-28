@@ -9,6 +9,7 @@ use Core\Services\FlashService;
 use Core\Interfaces\{RequestInterface,PdoDBInterface,RendererInterface};
 use Core\Http\{Request,Response};
 use Psr\Container\ContainerInterface;
+use Helpers\Validators\Validator;
 
 class Controller {
     use \Helpers\Traits\RouterTrait;
@@ -32,7 +33,7 @@ class Controller {
         $parts = explode('\\',get_class($this));
         $className = get_class($this);
         $folder = $parts[1];
-        $this->renderer->addPath($parts[1], dirname(PUBLIC_PATH). "/Src/Views/".$parts[1]."/");
+        $this->renderer->addPath($parts[1], dirname(PUBLIC_PATH). "/Src/View/".$parts[1]."/");
     }
     /**
      * prepare 
@@ -40,7 +41,7 @@ class Controller {
      * @param [type] $data
      * @return void
      */
-    protected function toJson($request,$data) : Response
+    protected function toJson(Request $request,$data) : Response
     {
 
         $callback = $request->getAttribute("callback");
@@ -53,5 +54,8 @@ class Controller {
     protected function getModel($model){
         return $this->database->getManager($model);
     }
+    protected function getValidator(RequestInterface $request){
+        return new Validator($request->getRequest());
+    }  
     
 }

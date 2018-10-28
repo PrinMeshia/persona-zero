@@ -1,0 +1,28 @@
+{
+    "website": {
+        "title": "Persona Framework",
+        "description": "Persona Framework",
+        "version": "3.0.0",
+        "author": "Prin'Meshia",
+        "lang": "fr-FR",
+        "keywords": ""
+    },
+    "system": {
+        "language": "fr-fr",
+        "timezone": "Europe/Paris",
+        "maintenance": false
+    },
+    "fixedpath": {
+        "app": "/app/",
+        "src": "/src/"
+    },
+    "path": {
+        "tmp": "/stockage/",
+        "cache": "{path.tmp}cache/",
+        "public": "/public/"
+    },
+    "default" : {
+        "controller" : "home",
+        "method" : "index"
+    }
+}

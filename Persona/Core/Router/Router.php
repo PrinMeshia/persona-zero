@@ -20,7 +20,7 @@ class Router
      */
     public function match(RequestInterface $request)
     {
-        
+
         $result = $this->router->match($request);
         return $result ?? null;
     }
@@ -39,12 +39,15 @@ class Router
     /**
      * @param string $file
      */
-    public function loadYaml($file)
+    public function loadYaml($file, string $root)
     {
         $routes = (new Yaml())->load($file);
-        foreach ($routes as $name => $route) {
-            $this->router->addRoutes(new Route($name, [$route["controller"],$route["action"]]), $route['method'], $route["path"]);
-        }
 
+        foreach ($routes as $name => $route) {
+            $methods = explode(",",$route['method']);
+            foreach ($methods as $method) {
+                $this->router->addRoutes(new Route($name, [$route["controller"], $route["action"]]), $method, $root . $route["path"]);
+            }
+        }
     }
 }

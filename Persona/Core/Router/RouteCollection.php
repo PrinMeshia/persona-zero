@@ -113,6 +113,7 @@ class RouteCollection
     }
     private function findByMethod(string $name)
     {
+        
         foreach ($this->_METHOD as $method) {
             if (array_key_exists($method, $this->routes)) {
                 foreach ($this->routes[$method] as $key => $value) {
@@ -127,6 +128,7 @@ class RouteCollection
     public function find(string $name, array $params = [])
     {
         $path = $this->findByMethod($name);
+     
         if (is_null($path)) {
             return null;
         }

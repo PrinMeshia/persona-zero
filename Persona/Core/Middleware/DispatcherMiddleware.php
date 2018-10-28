@@ -31,13 +31,13 @@ class DispatcherMiddleware
             } elseif ($response instanceof ResponseInterface) {
                 return $response;
             } else {
-                if ($this->container->get("system")["env"] != "production")
+                if ($this->container->get("debug") != "production")
                     throw new \Exception('the response is unavailable');
                 else
                     return false;
             }
         } else {
-            if ($this->container->get("system")["env"] != "production")
+            if ($this->container->get("debug") )
                 throw new \Exception('the response is unavailable');
             else
                 return false;

@@ -3,6 +3,7 @@ namespace Core\Database;
 
 use Core\Interfaces\ManagerInterface;
 use Core\Exceptions\DBException;
+use Core\Exceptions\NoRecordException;
 
 /**
  * Class Manager
@@ -28,6 +29,7 @@ class Manager
      * @param $model
      * @throws DBException
      */
+
     public function __construct(\PDO $pdo, $model)
     {
         $this->pdo = $pdo;
@@ -39,6 +41,9 @@ class Manager
             throw new DBException(sprintf ("'%s' is not an entity", $model));
         }
         $this->model = $model;
+    }
+    public function getMetadata(){
+        return $this->metadata;
     }
     /**
      * @param $property
@@ -188,12 +193,50 @@ class Manager
         }
     }
     /**
+	 * Count row
+	 *
+	 * @return void
+	 */
+	public function count(string $column)
+	{
+        $sqlQuery = sprintf("SELECT count(%s) FROM %s", $column,$this->metadata["table"]);
+        $statement = $this->pdo->prepare($sqlQuery);
+        $statement->execute();
+        $result = $statement->fetch(\PDO::FETCH_BOTH);
+		if($result === false){
+			throw new NoRecordException();
+		}
+		return $result[0];
+	}
+    /**
+	 * Undocumented function
+	 *
+	 * @param array $fields
+	 * @return array
+	 */
+	public function findList(array $fields) : array
+	{
+        $listfield = join(", ", $fields);
+        $sqlQuery = sprintf("SELECT %s FROM %s",join(", ", $fields), $this->metadata["table"]);
+        $statement = $this->pdo->prepare($sqlQuery);
+        $statement->execute();
+		$results = $statement->fetchAll(\PDO::FETCH_BOTH );
+        if($results === false){
+			throw new NoRecordException();
+        }
+        $list = [];
+		foreach ($results as $item) {
+			$list[$item[0]] = $item[1];
+		}
+        return $list;
+	}
+    /**
      * @param Model $model
      */
     private function update(Model &$model)
     {
         $set = [];
-        $parameters = [];
+        $parameters = ["id" => $model->getPrimaryKey()];
         foreach(array_keys($this->metadata["columns"]) as $column)
         {
             $sqlValue = $model->getSQLValueByColumn($column);
@@ -206,7 +249,7 @@ class Manager
         if(count($set)) {
             $sqlQuery = sprintf("UPDATE %s SET %s WHERE %s = :id", $this->metadata["table"], implode(",", $set), $this->metadata["primaryKey"]);
             $statement = $this->pdo->prepare($sqlQuery);
-            $statement->execute(["id" => $model->getPrimaryKey()]);
+            $statement->execute($parameters);
         }
     }
     /**
@@ -214,16 +257,18 @@ class Manager
      */
     private function insert(Model &$model)
     {
-        $set = [];
+        $colums = [];
         $parameters = [];
         foreach(array_keys($this->metadata["columns"]) as $column)
         {
+
             $sqlValue = $model->getSQLValueByColumn($column);
             $model->orignalData[$column] = $sqlValue;
-            $parameters[$column] = $sqlValue;
-            $set[] = sprintf("%s = :%s", $column, $column);
+            $parameters[] = $sqlValue;
+            $colums[] = sprintf("%s", $column);
+            $set[] = "?";
         }
-        $sqlQuery = sprintf("INSERT INTO %s SET %s", $this->metadata["table"], implode(",", $set));
+        $sqlQuery = sprintf("INSERT INTO %s (%s) VALUES (%s)", $this->metadata["table"],implode(",", $colums), implode(",", $set));
         $statement = $this->pdo->prepare($sqlQuery);
         $statement->execute($parameters);
         $model->setPrimaryKey($this->pdo->lastInsertId());
@@ -237,4 +282,6 @@ class Manager
         $statement = $this->pdo->prepare($sqlQuery);
         $statement->execute(["id" => $model->getPrimaryKey()]);
     }
+
+    
 }

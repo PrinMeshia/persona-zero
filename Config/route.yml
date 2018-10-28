@@ -2,4 +2,54 @@ homepage:
     path: /
     controller: \Controller\Main\IndexController
     action: indexAction
-    method: [GET]
+    method: GET
+
+# Admin panel
+dashboard:
+    path: /me_admin/
+    controller: \Controller\Admin\IndexController
+    action: indexAction
+    method: GET
+
+#category
+admin.category:
+    path: /me_admin/category
+    controller: \Controller\Admin\CategoryController
+    action: listAction
+    method: GET
+category.delete:
+    path: /me_admin/category/{id:[\d]+}
+    controller: \Controller\Admin\CategoryController
+    action: deleteAction
+    method: DELETE
+category.create:
+    path: /me_admin/category/create
+    controller: \Controller\Admin\CategoryController
+    action: createAction
+    method: GET,POST
+category.edit:
+    path: /me_admin/category/{id:[\d]+}
+    controller: \Controller\Admin\CategoryController
+    action: editAction
+    method: GET,POST
+#post
+admin.post:
+    path: /me_admin/post
+    controller: \Controller\Admin\postController
+    action: listAction
+    method: GET
+post.delete:
+    path: /me_admin/post/{id:[\d]+}
+    controller: \Controller\Admin\postController
+    action: deleteAction
+    method: DELETE
+post.create:
+    path: /me_admin/post/create
+    controller: \Controller\Admin\postController
+    action: createAction
+    method: GET,POST
+post.edit:
+    path: /me_admin/post/{id:[\d]+}
+    controller: \Controller\Admin\postController
+    action: editAction
+    method: GET,POST

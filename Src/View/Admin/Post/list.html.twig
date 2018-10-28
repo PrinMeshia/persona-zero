@@ -1,0 +1,42 @@
+{% extends '@Admin/admlayout.html.twig' %}
+
+{% block title "Posts" %}
+
+{% block body %}
+
+
+<p class="text-right">
+    <a href="{{path('post.create')}}" class="btn btn-primary">Ajouter un article</a>
+</p>
+
+
+
+
+
+<table class="table table-striped ">
+    <thead class="thead-default">
+        <tr>
+            <th>id</th>
+            <th>Title</th>
+            <th>Categorie</th>
+            <th>action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set token_input = csrf_input()  %}
+         {% for item in items %}
+            <tr>
+                <td scope="row">{{item.id}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.category}}</td>
+                <td><a href="{{path('post.edit',{'id':item.id})}}" class="btn btn-primary">Edit</a>
+                <form style="display:inline" action="{{ path('post.delete',{'id':item.id}) }}" method="POST" onsubmit="return confirm('Remove this post?');">
+                    {{ token_input  | raw}}
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+            </tr>
+             {% endfor %}
+        </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends '@Admin/admlayout.html.twig' %}
+
+{% block title item.title %}
+
+{% block body %}
+
+
+<h1 class="my-4">
+    Editer le post <strong>{{item.title}}</strong></h1>
+
+<div class="container">
+
+    <form action="{{path('post.edit',{'id':item.id})}}" method="POST">
+        {{ include('@Admin/form/AdminPost.html.twig') }} 
+    </form>
+</div>
+
+{% endblock %}

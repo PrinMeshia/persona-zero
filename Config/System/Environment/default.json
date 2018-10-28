@@ -1,0 +1,14 @@
+{
+    "debug": true, 
+    "database": {
+        "host": "localhost",
+        "name": "persona",
+        "charset": "",
+        "user": "root",
+        "pass": "",
+        "prefix": "",
+        "cache": true,
+        "cache_time": 60
+    },
+    "rootfolder" : "/mvc"
+}

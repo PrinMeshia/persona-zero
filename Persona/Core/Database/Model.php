@@ -51,8 +51,11 @@ abstract class Model
                 $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}($value);
                 break;
             case "datetime":
-                $datetime = \DateTime::createFromFDBat("Y-m-d H:i:s", $value);
-                $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}($datetime);
+                //$datetime = \DateTime::createFromFDBat("Y-m-d H:i:s", $value);
+                $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}($value);
+                break;
+            default:
+                $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}($value);
                 break;
         }
     }
@@ -62,6 +65,7 @@ abstract class Model
      */
     public function getSQLValueByColumn($column)
     {
+
         $value = $this->{sprintf("get%s", ucfirst($this::metadata()["columns"][$column]["property"]))}();
         if($value instanceof \DateTime){
             return $value->fDBat("Y-m-d H:i:s");

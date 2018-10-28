@@ -1,0 +1,18 @@
+{% extends '@Admin/admlayout.html.twig' %}
+
+{% block title "Ajout d'un article" %}
+
+{% block body %}
+
+
+
+<h1 class="my-4">
+    Ajout d'un article</h1>
+
+<div class="container">
+     <form action="{{path('post.create')}}" method="POST" enctype="multipart/form-data">
+         {{ include('@Admin/Form/AdminPost.html.twig') }} 
+    </form>
+</div>
+
+{% endblock %}

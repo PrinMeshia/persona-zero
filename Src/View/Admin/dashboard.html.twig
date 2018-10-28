@@ -1,0 +1,20 @@
+{% extends '@Admin/admlayout.html.twig' %}
+
+{% block title "Admin DashBoard" %}
+
+{% block body %}
+    <h1>DashBoard</h1>
+    <div class="col-sm-4">
+    <div class="card">
+        <div class="card-block">
+        <h4 class="card-title">
+            {{count}}
+        </h4>
+        <p class="card-text">
+            Arcticle{%if count > 1%}s{% endif %}
+        </p>
+        <a href="{{path('admin.post')}}" class="btn btn-primary">Gérer les articles</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

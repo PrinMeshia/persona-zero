@@ -1,0 +1,35 @@
+{% extends '@Admin/admlayout.html.twig' %}
+
+{% block title "Categories" %}
+
+{% block body %}
+
+
+<p class="text-right">
+    <a href="{{path('category.create')}}" class="btn btn-primary">Ajouter une category</a>
+</p>
+<table class="table table-striped ">
+    <thead class="thead-default">
+        <tr>
+            <th>id</th>
+            <th>Title</th>
+            <th>action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set token_input = csrf_input()  %}
+         {% for item in items %}
+            <tr>
+                <td scope="row">{{item.id}}</td>
+                <td>{{item.title}}</td>
+                <td><a href="{{path('category.edit',{'id':item.id})}}" class="btn btn-primary">Edit</a>
+                <form style="display:inline" action="{{ path('category.delete',{'id':item.id}) }}" method="POST" onsubmit="return confirm('Remove this category?');">
+                    {{ token_input | raw}}
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+            </tr>
+             {% endfor %}
+        </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,10 @@
+{{ csrf_input() }}
+
+<div class="row">
+{{field("title",item.title,"Titre de la catégorie",{'class':'col-sm-1-12 col-form-label'})}}
+{{field("slug",item.slug,"Slug",{'class':'col-sm-1-12 col-form-label'})}}
+
+</div>
+
+<button type="submit" class="btn btn-primary">Sauvegarder</button>
+<a href="{{path('admin.category')}}" class="btn btn-secondary">Annuler</a>

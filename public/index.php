@@ -33,7 +33,7 @@ $app = (new Bootstrap())
         ->pipe(RouterMiddleware::class)
         ->pipe(DispatcherMiddleware::class)
         ->pipe(NotFoundMiddleware::class)
-        ->loadParameter(dirname(__DIR__).'/Config/system/')
+        ->loadParameter(dirname(__DIR__).'/Config/System/')
         ->LoadRouteFile(dirname(__DIR__).'/Config/route.yml');
 
 if (php_sapi_name() !== "cli") {

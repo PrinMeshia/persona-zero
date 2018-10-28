@@ -2,6 +2,7 @@
 namespace Core\Database;
 use Core\Database\Database;
 use Core\Interfaces\PdoDBInterface;
+use \PDO;
 /**
  * Class PdoDB
  * @package Core\Database
@@ -11,7 +12,7 @@ class PdoDB extends Database
     /**
      * @var \PDO
      */
-    private $pdo;
+    private $connection;
     /**
      * @var array
      */
@@ -19,14 +20,31 @@ class PdoDB extends Database
     /**
      * @return \PDO
      */
-    public function getPdo()
+    public function getconnection()
     {
-        return $this->pdo;
+        if ($this->connection === null) {
+            $dsn = 'mysql:host=' . $this->dbHost . ';dbname=' . $this->dbName;
+            try {
+                $pdo = new PDO($dsn, $this->dbUser, $this->dbPass);
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+                $this->connection = $pdo;
+            } catch (PDOException $e) {
+                throw new \Exception('Error connecting to host. ' . $e->getMessage(), E_USER_ERROR);
+            }
+        }
+        return $this->connection;
     }
-    public function getManager($model)
+    /**
+     * get model manager
+     *
+     * @param string $model
+     * @return void
+     */
+    public function getManager(string $model)
     {
         $managerClass = $model::getManager();
-        $this->managers[$model] = $this->managers[$model] ?? new $managerClass($this->pdo, $model);
+        $this->managers[$model] = $this->managers[$model] ?? new $managerClass($this->getconnection(), $model);
         return $this->managers[$model];
     }
 }

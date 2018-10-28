@@ -1,0 +1,18 @@
+{% extends '@Admin/admlayout.html.twig' %}
+
+{% block title "Ajout d'une categorie" %}
+
+{% block body %}
+
+
+
+<h1 class="my-4">
+   Ajout d'une nouvelle catégorie</h1>
+
+<div class="container">
+     <form action="{{path('category.create')}}" method="POST">
+         {{ include('@Admin/Form/AdminCategory.html.twig') }} 
+    </form>
+</div>
+
+{% endblock %}

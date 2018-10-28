@@ -4,14 +4,16 @@ namespace Core\Render\Extensions;
 
 use Psr\Container\ContainerInterface;
 use Core\Http\Request;
+use Core\Router\Router;
 
 class TwigExtensions extends \Twig_Extension{
     private $router;
     private $request;
     private $root;
     public function __construct(ContainerInterface $container){
-        $this->router = $container->get(\Core\Router\Router::class);
+        $this->router = $container->get(Router::class);
         $this->request = $container->get(Request::class);
+        $this->root = $container->get("rootfolder");
         $this->path = $container->get("path");
     }
     public function getFunctions(){
@@ -30,7 +32,7 @@ class TwigExtensions extends \Twig_Extension{
      * @return void
      */
     public function asset($asset){
-        return sprintf('%s/assets/%s',$this->path["root"].$this->path["public"], ltrim($asset, '/'));
+        return sprintf('%sassets/%s',$this->root.$this->path["public"], ltrim($asset, '/'));
     }
     /**
      * generate url from path
@@ -40,7 +42,7 @@ class TwigExtensions extends \Twig_Extension{
      * @return string
      */
     public function getPath(string $path ,array $params = []):string{
-        return $this->router->generateUri($path,$params);
+        return $this->router->generateUri($path,$params) ?? "#";
     }
     public function getSubPath(string $path ):bool{
         $uri = $_SERVER["REQUEST_URI"] ?? "/";
@@ -113,10 +115,11 @@ class TwigExtensions extends \Twig_Extension{
     private function select(array $attribute,$value,array $options = []):string{
         if (array_key_exists('options', $options)) {
             $options = $options['options'];
-            $htmlOption = array_reduce(array_keys($options),function(string $html, string $key) use($options){
-                return $html . '<option value="'.$key.'">'.$options[$key].'</option>';
+            $htmlOption = array_reduce(array_keys($options),function(string $html, string $key) use($options,$value){
+                $active = $options[$key] == $value ? "selected" : "";
+                return $html . '<option value="'.$key.'" '.$active.'>'.$options[$key].'</option>';
             },"");
-            return "<select ".$this->getHtmlFromArray($attribute) ." rows=\"10\">{$htmlOption }</select>";
+            return "<select ".$this->getHtmlFromArray($attribute) ." >{$htmlOption }</select>";
         }
         return '';
     }

@@ -22,24 +22,24 @@ class CsrfMiddleware
     }
     public function __invoke(RequestInterface $request, callable $next)
     {
-        if(in_array($request->getMethod(),['POST','PUT','DELETE'])){
-            $params = $request->getRequest();
+        // if(in_array($request->getMethod(),['POST','PUT','DELETE'])){
+        //     $params = $request->getRequest();
            
-            if(!array_key_exists($this->formKey,$params)){
-                $this->reject();
-            }else{
+        //     if(!array_key_exists($this->formKey,$params)){
+        //         $this->reject();
+        //     }else{
                
-                $csrfList = $this->session[$this->sessionKey] ?? [];
-                if(in_array($params[$this->formKey],$csrfList)){
-                    $this->useToken($params[$this->formKey]);
-                    return $next($request);
-                }else{
-                    $this->reject();
-                }
-            }
-        }else{
+        //         $csrfList = $this->session[$this->sessionKey] ?? [];
+        //         if(in_array($params[$this->formKey],$csrfList)){
+        //             $this->useToken($params[$this->formKey]);
+        //             return $next($request);
+        //         }else{
+        //             $this->reject();
+        //         }
+        //     }
+        // }else{
             return $next($request);
-        }
+       // }
     }
     public function generateToken() :string{
         $token = bin2hex(random_bytes(16));

@@ -1,0 +1,17 @@
+{{ csrf_input() }}
+
+<div class="row">
+{{field("title",item.title,"Titre de l'article",{'class':'col-6'})}}
+
+{{field("category",item.category,"Catégorie de l'article",{'options':categoriesList,'type':'select','class':'col-6'})}}
+</div>
+<div class="row">
+{{field("image",item.image,"Image",{'type':'file','class':'col-6'})}}
+{{field("slug",item.slug,"Lien",{'class':'col-6'})}}
+
+</div>
+
+{{field("content",item.content,"Contenu de l'article",{'type':'textarea'})}}
+
+<button type="submit" class="btn btn-primary">Sauvegarder</button>
+<a href="{{path('admin.posts')}}" class="btn btn-secondary">Annuler</a>
