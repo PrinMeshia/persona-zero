@@ -35,21 +35,21 @@ category.edit:
 #post
 admin.post:
     path: /me_admin/post
-    controller: \Controller\Admin\postController
+    controller: \Controller\Admin\PostController
     action: listAction
     method: GET
 post.delete:
     path: /me_admin/post/{id:[\d]+}
-    controller: \Controller\Admin\postController
+    controller: \Controller\Admin\PostController
     action: deleteAction
     method: DELETE
 post.create:
     path: /me_admin/post/create
-    controller: \Controller\Admin\postController
+    controller: \Controller\Admin\PostController
     action: createAction
     method: GET,POST
 post.edit:
     path: /me_admin/post/{id:[\d]+}
-    controller: \Controller\Admin\postController
+    controller: \Controller\Admin\PostController
     action: editAction
     method: GET,POST

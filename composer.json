@@ -22,7 +22,8 @@
             "Controller\\":"Src/Controller/",
             "Model\\":"Src/Model/",
             "Manager\\":"Src/Manager/",
-            "Widget\\":"Src/Widget/"
+            "Widget\\":"Src/Widget/",
+            "Bin\\":"bin/"
         },
         "files": [
             "Persona/functions.php"
