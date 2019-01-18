@@ -1,7 +1,7 @@
 {
     "debug": true, 
     "database": {
-        "host": "localhost",
+        "host": "persona.zero",
         "name": "persona",
         "charset": "",
         "user": "root",
@@ -10,5 +10,5 @@
         "cache": true,
         "cache_time": 60
     },
-    "rootfolder" : "/mvc"
+    "rootfolder" : ""
 }

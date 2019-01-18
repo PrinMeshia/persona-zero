@@ -22,6 +22,7 @@ class Router
     {
 
         $result = $this->router->match($request);
+        
         return $result ?? null;
     }
     /**
@@ -49,5 +50,6 @@ class Router
                 $this->router->addRoutes(new Route($name, [$route["controller"], $route["action"]]), $method, $root . $route["path"]);
             }
         }
+        
     }
 }

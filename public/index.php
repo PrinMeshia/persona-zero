@@ -9,10 +9,8 @@ use Core\Middleware\RouterMiddleware;
 use Core\Middleware\NotFoundMiddleware;
 use Core\Middleware\DispatcherMiddleware;
 
-
-// error_reporting(E_ALL);
-// ini_set('display_errors', '1');
-
+ error_reporting(E_ALL);
+ ini_set('display_errors', '1');
 chdir(dirname(__dir__));;
 define("PUBLIC_PATH", __DIR__);
 
