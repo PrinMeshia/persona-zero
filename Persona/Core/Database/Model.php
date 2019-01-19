@@ -50,6 +50,9 @@ abstract class Model
             case "string":
                 $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}($value);
                 break;
+            // case "object":
+            //     $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}($value);
+            //     break;
             case "datetime":
                 //$datetime = \DateTime::createFromFDBat("Y-m-d H:i:s", $value);
                 $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}($value);

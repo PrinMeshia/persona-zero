@@ -240,7 +240,7 @@ class Manager
         foreach(array_keys($this->metadata["columns"]) as $column)
         {
             $sqlValue = $model->getSQLValueByColumn($column);
-            if($sqlValue !== $model->originalData[$column]) {
+            if($column !== $this->metadata["primaryKey"] && $sqlValue !== $model->originalData[$column]) {
                 $parameters[$column] = $sqlValue;
                 $model->orignalData[$column] = $sqlValue;
                 $set[] = sprintf("%s = :%s", $column, $column);
@@ -261,7 +261,6 @@ class Manager
         $parameters = [];
         foreach(array_keys($this->metadata["columns"]) as $column)
         {
-
             $sqlValue = $model->getSQLValueByColumn($column);
             $model->orignalData[$column] = $sqlValue;
             $parameters[] = $sqlValue;
