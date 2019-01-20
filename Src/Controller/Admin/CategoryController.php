@@ -14,6 +14,7 @@ class CategoryController extends Controller{
     }
     public function listAction(Request $request) : string
     {
+ 
         $items = $this->category->FindPaginated(1);
         $flash = $this->flash;
         return $this->renderer->render('@Admin/category/list', compact('items', 'flash'));
